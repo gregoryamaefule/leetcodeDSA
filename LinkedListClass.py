@@ -26,7 +26,12 @@ class MyLinkedList:
         return -1  
 
     def addAtHead(self, val: int) -> None:
-        self.head = val
+        if(self.head):
+            self.addAtIndex(1, self.head)
+            self.head = val
+            return
+        else:
+            self.head = val
         
 
     def addAtTail(self, val: int) -> None:
@@ -67,6 +72,10 @@ class MyLinkedList:
                     node = node.next
                     prev = prev.next
                 counter += 1
+                # print(counter)
+                # print('was here')
+        if (counter == index):
+            self.addAtTail(val)
 
     def deleteAtIndex(self, index: int) -> None:
         prev = self
@@ -109,19 +118,3 @@ while (node):
         print(node.val)
         node = node.next
 
-# obj = MyLinkedList()
-# obj.addAtHead(1)
-# obj.addAtTail(3)
-# obj.addAtTail(34)
-# obj.addAtTail(32)
-
-# obj.addAtIndex(1,2) #problem with addAtIndex and deleteAtIndex methods
-# node = obj
-# while (node):
-#     if(node == obj):
-#         print(node.head)
-#         node =node.next
-#         continue
-#     else:
-#         print(node.val)
-#         node = node.next
