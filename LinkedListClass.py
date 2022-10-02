@@ -16,7 +16,7 @@ class MyLinkedList:
         while (node):
             if (counter == index):
                 if (counter == 0):
-                    return node.head
+                    return -1 if node.head == None else node.head
                 else:
                     return node.val
             else:
@@ -26,7 +26,7 @@ class MyLinkedList:
         return -1  
 
     def addAtHead(self, val: int) -> None:
-        if(self.head):
+        if(self.head or self.head == 0):
             self.addAtIndex(1, self.head)
             self.head = val
             return
@@ -36,6 +36,9 @@ class MyLinkedList:
 
     def addAtTail(self, val: int) -> None:
         node = self
+        if(node.head == None):
+            self.addAtHead(val)
+            return
         while(node):
             if (node.next == None):
                 node.next = Node()
@@ -52,14 +55,12 @@ class MyLinkedList:
         newNode = Node()
         newNode.val = val
         prev = self
-        # Next = None
         node = self
         counter = 0
         while (node):
             if (counter == index):
                 if (counter == 0):
-                    newNode.next = node
-                    prev.head = newNode
+                    self.addAtHead(val)
                     return
                 else:
                     newNode.next = node
@@ -72,8 +73,9 @@ class MyLinkedList:
                     node = node.next
                     prev = prev.next
                 counter += 1
-                # print(counter)
-                # print('was here')
+        if (counter == index and counter == 1):
+            self.next = newNode
+            return
         if (counter == index):
             self.addAtTail(val)
 
@@ -84,11 +86,18 @@ class MyLinkedList:
         while (node):
             if (counter == index):
                 if (counter == 0):
-                    prev.head = node.next
-                    return
-                else:
-                    prev.next = node.next
-                    return
+                    if (node.next and node.next.next):
+                        prev.head = node.next.val
+                        prev.next = node.next.next
+                        return
+                    elif(node.next):
+                        prev.head = node.next.val
+                        prev.next = None
+                        return
+                    else:
+                        prev.head = None
+                        prev.next = None
+                        return
             else:
                 if (counter == 0):
                     node = node.next
@@ -96,25 +105,17 @@ class MyLinkedList:
                     node = node.next
                     prev = prev.next
                 counter += 1
-obj = MyLinkedList()
-obj.addAtHead(7)
-obj.addAtHead(2)
-obj.addAtHead(1)
-obj.addAtIndex(3,0)
-obj.deleteAtIndex(2)
-obj.addAtHead(6)
-obj.addAtTail(4)
-obj.get(4)
-print(obj.get(4))
 
 
-node = obj
-while (node):
-    if(node == obj):
-        print(node.head)
-        node =node.next
-        continue
-    else:
-        print(node.val)
-        node = node.next
+
+#code to loop over the linkedlist and print items
+# node = obj
+# while (node):
+#     if(node == obj):
+#         print(node.head)
+#         node =node.next
+#         continue
+#     else:
+#         print(node.val)
+#         node = node.next
 
